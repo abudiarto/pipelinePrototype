@@ -25,7 +25,7 @@ SECRET_KEY = 'uui&(ey253+uwz)tn(se5!qruh%3f*a7g@afi&pyr#zg_k7-#2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['young-river-04304.herokuapp.com']
 
 
 # Application definition
@@ -127,3 +127,5 @@ STATIC_URL = '/static/'
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
