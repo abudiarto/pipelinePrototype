@@ -1,0 +1,114 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1280;
+            height: 720;
+            background-color: #FFFFFF;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#660000", "font": {"color": "black"}, "id": "IGF1R", "label": "IGF1R", "level": 2, "mass": 1, "shape": "dot", "size": 20, "title": "rs6598554"}, {"color": "#996633", "font": {"color": "black"}, "id": "rs6598554", "label": "rs6598554", "level": 1, "mass": 2, "shape": "triangle", "size": 20, "title": "rs6598554"}, {"color": "#660000", "font": {"color": "black"}, "id": "CD68", "label": "CD68", "level": 2, "mass": 1, "shape": "dot", "size": 20, "title": "rs78180894"}, {"color": "#996633", "font": {"color": "black"}, "id": "rs78180894", "label": "rs78180894", "level": 1, "mass": 2, "shape": "triangle", "size": 20, "title": "rs78180894"}, {"color": "#660000", "font": {"color": "black"}, "id": "MPDU1", "label": "MPDU1", "level": 2, "mass": 1, "shape": "dot", "size": 20, "title": "rs78180894"}, {"color": "#660000", "font": {"color": "black"}, "id": "EIF4A1", "label": "EIF4A1", "level": 2, "mass": 1, "shape": "dot", "size": 20, "title": "rs78180894"}, {"color": "#660000", "font": {"color": "black"}, "id": "SNORA67", "label": "SNORA67", "level": 2, "mass": 1, "shape": "dot", "size": 20, "title": "rs78180894"}, {"color": "#660000", "font": {"color": "black"}, "id": "AC113189.5", "label": "AC113189.5", "level": 2, "mass": 1, "shape": "dot", "size": 20, "title": "rs78180894"}, {"color": "#660000", "font": {"color": "black"}, "id": "SNORD10", "label": "SNORD10", "level": 2, "mass": 1, "shape": "dot", "size": 20, "title": "rs78180894"}, {"color": "#660000", "font": {"color": "black"}, "id": "SENP3-EIF4A1", "label": "SENP3-EIF4A1", "level": 2, "mass": 1, "shape": "dot", "size": 20, "title": "rs78180894"}, {"color": "#660000", "font": {"color": "black"}, "id": "MEOX1", "label": "MEOX1", "level": 2, "mass": 1, "shape": "dot", "size": 20, "title": "rs2523157"}, {"color": "#996633", "font": {"color": "black"}, "id": "rs2523157", "label": "rs2523157", "level": 1, "mass": 2, "shape": "triangle", "size": 20, "title": "rs2523157"}, {"color": "#660000", "font": {"color": "black"}, "id": "SMAD7", "label": "SMAD7", "level": 2, "mass": 1, "shape": "dot", "size": 20, "title": "rs4245229"}, {"color": "#996633", "font": {"color": "black"}, "id": "rs4245229", "label": "rs4245229", "level": 1, "mass": 2, "shape": "triangle", "size": 20, "title": "rs4245229"}, {"color": "#660000", "font": {"color": "black"}, "id": "DOT1L", "label": "DOT1L", "level": 2, "mass": 1, "shape": "dot", "size": 20, "title": "rs3815146"}, {"color": "#996633", "font": {"color": "black"}, "id": "rs3815146", "label": "rs3815146", "level": 1, "mass": 2, "shape": "triangle", "size": 20, "title": "rs3815146"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4049", "label": "WP4049", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Neutrophil degranulation"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4146", "label": "WP4146", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Macrophage markers"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4096", "label": "WP4096", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Chromatin organization"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP2369", "label": "WP2369", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Histone Modifications"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP1785", "label": "WP1785", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Asparagine N-linked glycosylation"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP2003", "label": "WP2003", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "miR-targeted genes in leukocytes - TarBase"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP2004", "label": "WP2004", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "miR-targeted genes in lymphocytes - TarBase"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP2002", "label": "WP2002", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "miR-targeted genes in epithelium - TarBase"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4521", "label": "WP4521", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Glycosylation and related congenital defects"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP2760", "label": "WP2760", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Signaling by BMP"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4396", "label": "WP4396", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Nonalcoholic fatty liver disease"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4102", "label": "WP4102", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Deubiquitination"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP2755", "label": "WP2755", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Transcriptional activity of SMAD2/SMAD3:SMAD4 heterotrimer"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP3980", "label": "WP3980", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Protein alkylation leading to liver fibrosis"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP2742", "label": "WP2742", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Signaling by TGF-beta Receptor Complex"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP3924", "label": "WP3924", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Hfe effect on hepcidin production"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP560", "label": "WP560", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "TGF-beta Receptor Signaling"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP3931", "label": "WP3931", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "ESC Pluripotency Pathways"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4755", "label": "WP4755", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "PodNet: protein-protein interactions in the podocyte"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP2864", "label": "WP2864", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Apoptosis-related network due to altered Notch3 in ovarian cancer"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP366", "label": "WP366", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "TGF-beta Signaling Pathway"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP3624", "label": "WP3624", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Lung fibrosis"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4816", "label": "WP4816", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "TGF-beta Receptor Signalling in Skeletal Dysplasias"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP1984", "label": "WP1984", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Integrated Breast Cancer Pathway"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP2672", "label": "WP2672", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "ISG15 antiviral mechanism"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP2659", "label": "WP2659", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Deadenylation-dependent mRNA decay"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP1812", "label": "WP1812", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Eukaryotic Translation Initiation"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4566", "label": "WP4566", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Translation inhibitors in chronically activated PDGFRA cells"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP107", "label": "WP107", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Translation Factors"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP585", "label": "WP585", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Interferon type I signaling pathways"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4549", "label": "WP4549", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Fragile X Syndrome "}, {"color": "#336666", "font": {"color": "black"}, "id": "WP2593", "label": "WP2593", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "JAK/STAT"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4540", "label": "WP4540", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Pathways Regulating Hippo Signaling"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP2677", "label": "WP2677", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Signaling by Type 1 Insulin-like Growth Factor 1 Receptor (IGF1R)"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4541", "label": "WP4541", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Hippo-Merlin Signaling Dysregulation"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4217", "label": "WP4217", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Ebola Virus Pathway on Host"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4186", "label": "WP4186", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Somatroph axis (GH) and its relationship to dietary restriction and aging"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP254", "label": "WP254", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Apoptosis"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP3932", "label": "WP3932", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Focal Adhesion-PI3K-Akt-mTOR-signaling pathway"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP481", "label": "WP481", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Insulin Signaling"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP306", "label": "WP306", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Focal Adhesion"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4172", "label": "WP4172", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "PI3K-Akt Signaling Pathway"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP474", "label": "WP474", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Endochondral Ossification"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4223", "label": "WP4223", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Ras Signaling"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4262", "label": "WP4262", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Breast cancer pathway"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP615", "label": "WP615", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Senescence and Autophagy in Cancer"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP2261", "label": "WP2261", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Signaling Pathways in Glioblastoma"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP1544", "label": "WP1544", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "MicroRNAs in cardiomyocyte hypertrophy"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4808", "label": "WP4808", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Endochondral Ossification with Skeletal Dysplasias"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP3584", "label": "WP3584", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "MECP2 and Associated Rett Syndrome"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP3850", "label": "WP3850", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Factors and pathways affecting insulin-like growth factor (IGF1)-Akt signaling"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4806", "label": "WP4806", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "EGFR Tyrosine Kinase Inhibitor Resistance"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP4674", "label": "WP4674", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Head and Neck Squamous Cell Carcinoma"}, {"color": "#336666", "font": {"color": "black"}, "id": "WP2032", "label": "WP2032", "level": 3, "mass": 1, "shape": "square", "size": 20, "title": "Human Thyroid Stimulating Hormone (TSH) signaling pathway"}]);
+        edges = new vis.DataSet([{"color": "#75D0E6", "from": "IGF1R", "to": "rs6598554", "value": 0.5}, {"color": "#75D0E6", "from": "CD68", "to": "rs78180894", "value": 0.5}, {"color": "#75D0E6", "from": "MPDU1", "to": "rs78180894", "value": 0.5}, {"color": "#75D0E6", "from": "EIF4A1", "to": "rs78180894", "value": 0.5}, {"color": "#75D0E6", "from": "SNORA67", "to": "rs78180894", "value": 0.5}, {"color": "#75D0E6", "from": "AC113189.5", "to": "rs78180894", "value": 0.5}, {"color": "#75D0E6", "from": "SNORD10", "to": "rs78180894", "value": 0.5}, {"color": "#75D0E6", "from": "SENP3-EIF4A1", "to": "rs78180894", "value": 0.5}, {"color": "#75D0E6", "from": "MEOX1", "to": "rs2523157", "value": 0.5}, {"color": "#75D0E6", "from": "SMAD7", "to": "rs4245229", "value": 0.5}, {"color": "#75D0E6", "from": "DOT1L", "to": "rs3815146", "value": 0.5}, {"color": "#75D0E6", "from": "CD68", "to": "WP4049", "value": 0.5}, {"color": "#75D0E6", "from": "CD68", "to": "WP4146", "value": 0.5}, {"color": "#75D0E6", "from": "DOT1L", "to": "WP4096", "value": 0.5}, {"color": "#75D0E6", "from": "DOT1L", "to": "WP2369", "value": 0.5}, {"color": "#75D0E6", "from": "MPDU1", "to": "WP1785", "value": 0.5}, {"color": "#75D0E6", "from": "MPDU1", "to": "WP2003", "value": 0.5}, {"color": "#75D0E6", "from": "MPDU1", "to": "WP2004", "value": 0.5}, {"color": "#75D0E6", "from": "MPDU1", "to": "WP2002", "value": 0.5}, {"color": "#75D0E6", "from": "MPDU1", "to": "WP4521", "value": 0.5}, {"color": "#75D0E6", "from": "SMAD7", "to": "WP2760", "value": 0.5}, {"color": "#75D0E6", "from": "SMAD7", "to": "WP4396", "value": 0.5}, {"color": "#75D0E6", "from": "SMAD7", "to": "WP4102", "value": 0.5}, {"color": "#75D0E6", "from": "SMAD7", "to": "WP2755", "value": 0.5}, {"color": "#75D0E6", "from": "SMAD7", "to": "WP3980", "value": 0.5}, {"color": "#75D0E6", "from": "SMAD7", "to": "WP2742", "value": 0.5}, {"color": "#75D0E6", "from": "SMAD7", "to": "WP3924", "value": 0.5}, {"color": "#75D0E6", "from": "SMAD7", "to": "WP560", "value": 0.5}, {"color": "#75D0E6", "from": "SMAD7", "to": "WP3931", "value": 0.5}, {"color": "#75D0E6", "from": "SMAD7", "to": "WP4755", "value": 0.5}, {"color": "#75D0E6", "from": "SMAD7", "to": "WP2864", "value": 0.5}, {"color": "#75D0E6", "from": "SMAD7", "to": "WP366", "value": 0.5}, {"color": "#75D0E6", "from": "SMAD7", "to": "WP3624", "value": 0.5}, {"color": "#75D0E6", "from": "SMAD7", "to": "WP4816", "value": 0.5}, {"color": "#75D0E6", "from": "SMAD7", "to": "WP1984", "value": 0.5}, {"color": "#75D0E6", "from": "EIF4A1", "to": "WP2672", "value": 0.5}, {"color": "#75D0E6", "from": "EIF4A1", "to": "WP2659", "value": 0.5}, {"color": "#75D0E6", "from": "EIF4A1", "to": "WP1812", "value": 0.5}, {"color": "#75D0E6", "from": "EIF4A1", "to": "WP4566", "value": 0.5}, {"color": "#75D0E6", "from": "EIF4A1", "to": "WP107", "value": 0.5}, {"color": "#75D0E6", "from": "EIF4A1", "to": "WP585", "value": 0.5}, {"color": "#75D0E6", "from": "EIF4A1", "to": "WP4549", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP2593", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP4540", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP2677", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP4541", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP4217", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP4186", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP254", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP3932", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP481", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP306", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP4172", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP474", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP4223", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP4262", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP615", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP2261", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP1544", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP4808", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP3584", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP3850", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP4806", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP4674", "value": 0.5}, {"color": "#75D0E6", "from": "IGF1R", "to": "WP2032", "value": 0.5}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -100,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static '/main.css' %}">
+    {% if title %}
+        <title>Post GWAS/GWIS Bioinformatics Pipeline- {{ title }}</title>
+    {% else %}
+        <title>Post GWAS/GWIS Bioinformatics Pipeline</title>
+    {% endif %}
+
+    <!-- pyviz dependencies -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+
+    <!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+    <script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->  
+   <style type="text/css">
+    #mynetwork {
+    width: 960px;
+    height: 600px;
+    background-color: #FFFFFF;
+    border: 1px solid lightgray;
+    position: relative;
+    float: left;
+    }
+   </style>
+    
+</head>
+
+<body>
+  <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="{% url 'index'%}">Post GWAS/GWIS Bioinformatics Pipeline</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="{% url 'index'%}">Home</a>
+            </div>
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+              <a class="nav-item nav-link" href="#">Login</a>
+              <a class="nav-item nav-link" href="#">Register</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main role="main" class="container">
+      <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <div class="row">
+              <div class="col-md-12">
+                <form class="form-horizontal" action="{% url 'index' %}" method="post">
+                  <legend>Please input the hit SNPs from GWAS or GWIS</legend>
+                  <div class="form-group">
+                    {% csrf_token %}
+                    <label for="{{form.phrase.id_for_label}}"> </label>
+                      {{form.inputData}}
+                      {{form.phrase.errors}}
+
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+      <main role="main" class="container">
+      <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- <h3> Query SNPs from VEP</h3> -->
+                <div>
+                   {{ resultVEP | safe}}  
+                </div>
+              </div>
+            </div>            
+          </div>
+        </div>
+      </article>
+
+      <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- <h3> Query SNPs from VEP</h3> -->
+                <div>
+                   {{ resultWikiPathway | safe}}  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      
+      <article class="media content-section">
+        <div>
+          {{ networkMap | safe}}  
+        </div>
+      </article>
+    
+
+ 
+      
+    </main>
+
+  <footer class="page-footer font-small blue pt-4">
+    <!-- <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top"> -->
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 - BDSRC Bina Nusantara University</a>
+    </div>
+    <!-- Copyright -->
+    <!-- </nav> -->
+  </footer>
+
+
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
