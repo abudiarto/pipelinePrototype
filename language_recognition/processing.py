@@ -54,7 +54,10 @@ def vepQuery(inputData):
 		SNP_list["consequence_terms"] = SNP_list.apply(lambda x: x["consequence_terms"][0], axis=1)
 		SNP_GENE = SNP_list[["id","gene_symbol", "gene_id"]]
 	
-	return(SNP_list.to_html(), list(SNP_list.gene_symbol), SNP_GENE)
+		return(SNP_list.to_html(), list(SNP_list.gene_symbol), SNP_GENE)
+	else:
+		error = '<h3> All input variants are in intergenic regions </h3>'
+		return(error, error, 0)
 
 def wikiPathwayQuery(listGene):
 	separator = '&ids='

@@ -25,7 +25,9 @@ SECRET_KEY = 'uui&(ey253+uwz)tn(se5!qruh%3f*a7g@afi&pyr#zg_k7-#2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['young-river-04304.herokuapp.com']
+ALLOWED_HOSTS = [
+    'young-river-04304.herokuapp.common',
+    '127.0.0.1']
 
 
 # Application definition
