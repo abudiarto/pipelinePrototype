@@ -16,7 +16,7 @@ class TranslatePhraseView(View):
 		countVEP = 0
 		if form.is_valid():
 			resultVEP, listGene, SNP_GENE = vepQuery(form.data['inputData'])
-			if SNP_GENE == 0:
+			if isinstance(SNP_GENE, int):
 				return render(request, self.template_name, {'form': form, 
 														'resultVEP':resultVEP, 
 														'resultWikiPathway':'<h3> </h3>',

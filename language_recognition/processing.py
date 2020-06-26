@@ -75,8 +75,8 @@ def wikiPathwayQuery(listGene):
 	pathwayResult = pathwayResult.reset_index(drop=True)
 	pathwayResult.columns = ["GeneEnsembleID", "PathwayID", "PathwayName", "PathwayScore", "Species", "Revision", "URL"]
 	pathwayResult["GeneEnsembleID"] = pathwayResult.apply(lambda x: x["GeneEnsembleID"][0], axis=1)
-	GENE_PATHWAY = pathwayResult[pathwayResult.Species=="Homo sapiens"]
-	GENE_PATHWAY = GENE_PATHWAY[["GeneEnsembleID","PathwayID","PathwayName"]]
+	pathwayResult = pathwayResult[pathwayResult.Species=="Homo sapiens"]
+	GENE_PATHWAY = pathwayResult[["GeneEnsembleID","PathwayID","PathwayName"]]
 
 
 	return(pathwayResult.to_html(), GENE_PATHWAY)
