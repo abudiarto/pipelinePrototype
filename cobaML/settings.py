@@ -26,7 +26,7 @@ SECRET_KEY = 'uui&(ey253+uwz)tn(se5!qruh%3f*a7g@afi&pyr#zg_k7-#2'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'young-river-04304.herokuapp.common',
+    'young-river-04304.herokuapp.com',
     '127.0.0.1']
 
 
