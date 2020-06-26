@@ -116,7 +116,7 @@ def buildNetwork(GeneSNP, GenePathway):
 	        dstlevel = 3
 	        dstmass = 1
 	    
-	    got_net.add_node(src, src, title=ttl, 
+	    got_net.add_node(src, src, title=src, 
 	                     size= 20, 
 	                     color='#660000', 
 	                     level=2,
