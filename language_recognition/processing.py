@@ -52,7 +52,7 @@ def vepQuery(inputData):
 		SNP_list = SNP_list[fields]
 		SNP_list.reset_index(inplace = True, drop = True)
 		SNP_list["consequence_terms"] = SNP_list.apply(lambda x: x["consequence_terms"][0], axis=1)
-		SNP_GENE = SNP_list[["id","gene_symbol", "gene_id"]]
+		SNP_GENE = SNP_list[["id","gene_symbol", "gene_id", "consequence_terms"]]
 	
 		return(SNP_list.to_html(), list(SNP_list.gene_symbol), SNP_GENE)
 	else:
@@ -84,10 +84,11 @@ def wikiPathwayQuery(listGene):
 def buildNetwork(GeneSNP, GenePathway):
 	GeneSNP = GeneSNP
 	GenePathway = GenePathway
-	a = GeneSNP[["gene_symbol", "id", "id"]]
-	a.columns = ["var1","var2", "var3"]
+	a = GeneSNP[["gene_symbol", "id", "id","consequence_terms"]]
+	a.columns = ["var1","var2", "var3", "var4"]
 	b = GenePathway[["GeneEnsembleID", "PathwayID", "PathwayName"]]
 	b.columns = ["var1","var2","var3"]
+	b.var4 = 99
 	dataInput = pd.concat([a,b],axis=0)
 	dataInput["value"] = .5
 
@@ -101,23 +102,25 @@ def buildNetwork(GeneSNP, GenePathway):
 	sources = dataInput['var1']
 	targets = dataInput['var2']
 	title = dataInput["var3"]
+	consTerms = dataInput["var4"]
 	weights = dataInput['value']
-	edge_data = zip(sources, targets, title, weights)
+	edge_data = zip(sources, targets, title, consTerms, weights)
 	for e in edge_data:
 	    src = e[0]
 	    dst = e[1]
 	    ttl = e[2]
-	    w = e[3]
+	    w = e[4]
 	    if (e[1][0:2]=='rs'):
 	        dstCol = "#996633"
 	        dstshape ="triangle"
 	        dstlevel = 1
 	        dstmass = 2
+	        titleEdge = e[3]
 	    else:
 	        dstCol = "#336666"
 	        dstshape ="square"
 	        dstlevel = 3
-	        dstmass = 1
+	        dstmass = 1	        
 	    
 	    got_net.add_node(src, src, title=src, 
 	                     size= 20, 
@@ -130,7 +133,10 @@ def buildNetwork(GeneSNP, GenePathway):
 	                     level = dstlevel,
 	                     shape = dstshape,
 	                     mass = dstmass)
-	    got_net.add_edge(src, dst, value=w, color='#75D0E6')
+	    if (e[1][0:2]=='rs'):
+	    	got_net.add_edge(src, dst, value=w, color='#75D0E6', title = titleEdge)
+	    else:
+	    	got_net.add_edge(src, dst, value=w, color='#75D0E6')
 	    neighbor_map = got_net.get_adj_list()
 
 	got_net.save_graph("network.html")
