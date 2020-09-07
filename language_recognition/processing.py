@@ -97,8 +97,9 @@ def buildNetwork(GeneSNP, GenePathway):
 
 	# set the physics layout of the network
 	#got_net.barnes_hut(central_gravity=0.8)
-	got_net.force_atlas_2based(gravity=-100, central_gravity=0.01, spring_length=100,
-	spring_strength=0.08, damping=0.4, overlap=0)
+	got_net.force_atlas_2based(gravity=-80, central_gravity=0.03, spring_length=60,
+		spring_strength=0.5, damping=0.9, overlap=0)
+	# got_net.hrepulsion(node_distance=120, central_gravity=0.0, spring_length=100, spring_strength=0.01, damping=0.09)
 	sources = dataInput['var1']
 	targets = dataInput['var2']
 	title = dataInput["var3"]
@@ -111,32 +112,33 @@ def buildNetwork(GeneSNP, GenePathway):
 	    ttl = e[2]
 	    w = e[4]
 	    if (e[1][0:2]=='rs'):
-	        dstCol = "#996633"
-	        dstshape ="triangle"
+	        dstCol = "#935116" #snp
+	        # dstshape ="triangle"
 	        dstlevel = 1
 	        dstmass = 2
 	        titleEdge = e[3]
 	    else:
-	        dstCol = "#336666"
-	        dstshape ="square"
+	        dstCol = "#edbb99" #pathway
+	        # dstshape ="square"
 	        dstlevel = 3
 	        dstmass = 1	        
 	    
 	    got_net.add_node(src, src, title=src, 
-	                     size= 20, 
-	                     color='#660000', 
+	                     size= 8, 
+	                     color='#a2d9ce', #gene
 	                     level=2,
-	                     mass = 1)
+	                     mass = 1,
+	                     borderWidth =0)
 	    got_net.add_node(dst, dst, title=ttl, 
-	                     size= 20, 
+	                     size= 8, 
 	                     color=dstCol,
-	                     level = dstlevel,
-	                     shape = dstshape,
-	                     mass = dstmass)
+	                     level = dstlevel,	                     
+	                     mass = dstmass,
+	                     borderWidth =0)
 	    if (e[1][0:2]=='rs'):
-	    	got_net.add_edge(src, dst, value=w, color='#75D0E6', title = titleEdge)
+	    	got_net.add_edge(src, dst, width=.8, color='#512e5f ', title = titleEdge)
 	    else:
-	    	got_net.add_edge(src, dst, value=w, color='#75D0E6')
+	    	got_net.add_edge(src, dst, width=.8, color='#17202a')
 	    neighbor_map = got_net.get_adj_list()
 
 	got_net.save_graph("network.html")
